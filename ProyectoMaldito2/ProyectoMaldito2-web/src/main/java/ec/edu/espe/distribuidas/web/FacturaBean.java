@@ -307,6 +307,7 @@ public class FacturaBean extends BaseBean implements Serializable {
             BeanUtils.copyProperties(this.cliente, this.clienteSelected);
             this.factura.setIdCliente(this.cliente.getIdCliente());
             this.factura.setClienteFactura(this.cliente);
+            
             this.mantenimientos = this.mantenimientoServicio.obtenerTodosMantenimientosCliente(this.cliente);
             this.factura.setFecha(new Date());
         } catch (IllegalAccessException | InvocationTargetException ex) {

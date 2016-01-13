@@ -159,8 +159,6 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(CitaMantenimientoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.setAsignacionInsumoSelected(null);
-        this.setLiquidacionAsignacionSelected(null);
         super.quitarNuevo();
     }
 

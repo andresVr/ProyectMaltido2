@@ -1,11 +1,16 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +21,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad DETALLE_DEVOLUCION
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "DETALLE_DEVOLUCION_001")
@@ -33,7 +39,7 @@ public class DetalleDevolucion implements Serializable {
     private Integer idDevolucion;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private Integer cantidad;
+    private BigDecimal cantidad;
 
     @JoinColumn(name = "ID_DEVOLUCION", referencedColumnName = "ID_DEVOLUCION", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -78,13 +84,14 @@ public class DetalleDevolucion implements Serializable {
         this.idDevolucion = idDevolucion;
     }
 
-    public Integer getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
+
 
     @Override
     public int hashCode() {

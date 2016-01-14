@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires.
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -17,8 +21,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad INSUMOS
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "INSUMOS_001")
@@ -38,10 +43,13 @@ public class Insumos implements Serializable {
     private BigDecimal precioCompra;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private Integer cantidad;
+    private BigDecimal cantidad;
 
     @Column(name = "TIPO_INSUMO", nullable = false)
     private String tipoInsumo;
+    
+    @Column(name = "UNIDAD_MEDIDA", nullable = false)
+    private String unidadMedida;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "insumo")
     List<AsignacionInsumo> insumoAsigndo;
@@ -54,6 +62,23 @@ public class Insumos implements Serializable {
 
     public Insumos() {
     }
+
+    public Insumos(String idInsumo, String nombre, String descripcion, BigDecimal precioCompra, BigDecimal cantidad, String tipoInsumo, String unidadMedida) {
+        this.idInsumo = idInsumo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioCompra = precioCompra;
+        this.cantidad = cantidad;
+        this.tipoInsumo = tipoInsumo;
+        this.unidadMedida = unidadMedida;
+    }
+    
+
+    public Insumos(String idInsumo, BigDecimal cantidad) {
+        this.idInsumo = idInsumo;
+        this.cantidad = cantidad;
+    }
+    
 
     public String getIdInsumo() {
         return idInsumo;
@@ -87,13 +112,48 @@ public class Insumos implements Serializable {
         this.precioCompra = precioCompra;
     }
 
-    public Integer getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
+
+
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
+    public List<AsignacionInsumo> getInsumoAsigndo() {
+        return insumoAsigndo;
+    }
+
+    public void setInsumoAsigndo(List<AsignacionInsumo> insumoAsigndo) {
+        this.insumoAsigndo = insumoAsigndo;
+    }
+
+    public List<DetalleDevolucion> getDetalleDevolucionInsumo() {
+        return detalleDevolucionInsumo;
+    }
+
+    public void setDetalleDevolucionInsumo(List<DetalleDevolucion> detalleDevolucionInsumo) {
+        this.detalleDevolucionInsumo = detalleDevolucionInsumo;
+    }
+
+    public List<DetallePedido> getDetallePedido() {
+        return detallePedido;
+    }
+
+    public void setDetallePedido(List<DetallePedido> detallePedido) {
+        this.detallePedido = detallePedido;
+    }
+
+
 
     public String getTipoInsumo() {
         return tipoInsumo;

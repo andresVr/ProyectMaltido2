@@ -1,14 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -20,34 +26,32 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
+ * Clase que representa a la entidad ASIGNACION_INSUMO contiene todos los datos
+ * asociados a la entidad.
  *
- * @author Andres Vr
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "ASIGNACION_INSUMO_001")
-@IdClass(AsignacionInsumoPK.class)
 
 public class AsignacionInsumo implements Serializable {
 
-    @Id
-    @Column(name = "ID_INSUMO", nullable = false)
-    private String idInsumo;
-
-    @Id
-    @Column(name = "ID_TECNICO", nullable = false)
-    private String idTecnico;
-
-    @Id
-    @Column(name = "ID_CITA", nullable = false)
-    private Integer idCita;
+    @EmbeddedId
+    AsignacionInsumoPK primaryKey;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "FECHA_ASIGNACION", nullable = false)
     private Date fechaAsignacion;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private Integer cantidad;
+    private BigDecimal cantidad;
 
+    @Column(name = "UNIDAD_MEDIDA", nullable = false)
+    private String unidadMedida;
+
+    @Column(name = "ESTADO", nullable = false)
+    private String estado;
+    
     @JoinColumns({
         @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false),
         @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
@@ -78,28 +82,12 @@ public class AsignacionInsumo implements Serializable {
         this.insumo = insumo;
     }
 
-        public String getIdInsumo() {
-        return idInsumo;
+    public AsignacionInsumoPK getPrimaryKey() {
+        return primaryKey;
     }
 
-    public void setIdInsumo(String idInsumo) {
-        this.idInsumo = idInsumo;
-    }
-
-    public String getIdTecnico() {
-        return idTecnico;
-    }
-
-    public void setIdTecnico(String idTecnico) {
-        this.idTecnico = idTecnico;
-    }
-
-    public Integer getIdCita() {
-        return idCita;
-    }
-
-    public void setIdCita(Integer idCita) {
-        this.idCita = idCita;
+    public void setPrimaryKey(AsignacionInsumoPK primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
     public Date getFechaAsignacion() {
@@ -110,20 +98,35 @@ public class AsignacionInsumo implements Serializable {
         this.fechaAsignacion = fechaAsignacion;
     }
 
-    public Integer getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
 
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.idInsumo);
-        hash = 17 * hash + Objects.hashCode(this.idTecnico);
-        hash = 17 * hash + Objects.hashCode(this.idCita);
+        int hash = 3;
+        hash = 11 * hash + Objects.hashCode(this.primaryKey);
         return hash;
     }
 
@@ -139,18 +142,12 @@ public class AsignacionInsumo implements Serializable {
             return false;
         }
         final AsignacionInsumo other = (AsignacionInsumo) obj;
-        if (!Objects.equals(this.idInsumo, other.idInsumo)) {
-            return false;
-        }
-        if (!Objects.equals(this.idTecnico, other.idTecnico)) {
-            return false;
-        }
-        return Objects.equals(this.idCita, other.idCita);
+        return Objects.equals(this.primaryKey, other.primaryKey);
     }
 
     @Override
     public String toString() {
-        return "AsignacionInsumo{" + "idInsumo=" + idInsumo + ", idTecnico=" + idTecnico + ", idCita=" + idCita + ", fechaAsignacion=" + fechaAsignacion + ", cantidad=" + cantidad + '}';
+        return "AsignacionInsumo{" + "primaryKey=" + primaryKey + ", fechaAsignacion=" + fechaAsignacion + ", cantidad=" + cantidad + ", unidadMedida=" + unidadMedida + ", mantenimientoAsignacionInsumo=" + mantenimientoAsignacionInsumo + ", insumo=" + insumo + '}';
     }
 
 }

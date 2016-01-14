@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -12,6 +16,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,14 +27,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad CITA_MANTENIMIENTO
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "CITA_MANTENIMIENTO_001")
 public class CitaMantenimiento implements Serializable {
 
-    @Id
+    @Id 
     @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
 
@@ -57,6 +64,12 @@ public class CitaMantenimiento implements Serializable {
 
     public CitaMantenimiento() {
     }
+
+    public CitaMantenimiento(Cliente clienteCita) {
+        this.clienteCita = clienteCita;
+    }
+    
+    
 
     public Cliente getClienteCita() {
         return clienteCita;

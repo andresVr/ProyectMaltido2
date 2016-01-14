@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -17,8 +21,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad DETALLE_PEDIDO
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "DETALLE_PEDIDO_001")
@@ -42,7 +47,7 @@ public class DetallePedido implements Serializable {
     private Insumos insumoPedido;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private Integer cantidad;
+    private BigDecimal cantidad;
 
     @Column(name = "PRECIO", nullable = false)
     private BigDecimal precio;
@@ -82,11 +87,11 @@ public class DetallePedido implements Serializable {
         this.idInsumo = idInsumo;
     }
 
-    public Integer getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
 

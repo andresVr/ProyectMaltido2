@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires.
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -22,11 +26,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad PEDIDO
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
-@Table(name = "PEDIDO_001")
+@Table(name = "PEDIDOS_001")
 public class Pedido implements Serializable {
 
     @Id
@@ -47,7 +52,7 @@ public class Pedido implements Serializable {
     @Column(name = "TOTAL_PEDIDO", nullable = false)
     private BigDecimal totalPedido;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
     List<DetallePedido> detallePedido;
 
     public Pedido() {
@@ -127,6 +132,10 @@ public class Pedido implements Serializable {
     @Override
     public String toString() {
         return "Pedido{" + "idPedido=" + idPedido + ", idProveedor=" + idProveedor + ", fecha=" + fecha + ", totalPedido=" + totalPedido + '}';
+    }
+
+    public void setTotalPedido(Integer total) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

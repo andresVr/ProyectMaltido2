@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires.
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -16,8 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad PROVEEDOR
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "PROVEEDOR_001")
@@ -42,10 +47,10 @@ public class Proveedor implements Serializable {
     @Column(name = "ESTADO", nullable = false)
     private String estado;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "devolucionProveedor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "devolucionProveedor")
     List<Devoluciones> devoluciondesProveedor;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "proveedorPedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedorPedido")
     List<Pedido> pedidoProveedor;
     
 

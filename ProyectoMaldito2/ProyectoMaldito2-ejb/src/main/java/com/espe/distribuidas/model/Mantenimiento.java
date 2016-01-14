@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires.
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -11,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -23,22 +28,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad MANTENIMIENTO
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "MANTENIMIENTO_001")
-@IdClass(MantenimientoPK.class)
 public class Mantenimiento implements Serializable {
 
-    @Id
-    @Column(name = "ID_EMPLEADO", nullable = false)
-    private String idEmpleado;
-
-    @Id
-    @Column(name = "ID_CITA", nullable = false)
-    private Integer idCita;
-
+    @EmbeddedId
+    protected MantenimientoPK primaryKey;
+    
     @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private CitaMantenimiento citaMantenimiento;
@@ -58,10 +58,17 @@ public class Mantenimiento implements Serializable {
     @Column(name = "PRECIO", nullable = false)
     private BigDecimal precio;
 
+    @Column(name = "ESTADO", nullable = false)
+    private String estado;
+    
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mantenimientoAsignacionInsumo")
     private List<AsignacionInsumo> insumosAsignados;
 
     public Mantenimiento() {
+    }
+
+    public Mantenimiento(CitaMantenimiento citaMantenimiento) {
+        this.citaMantenimiento = citaMantenimiento;
     }
 
     public List<AsignacionInsumo> getInsumosAsignados() {
@@ -80,28 +87,12 @@ public class Mantenimiento implements Serializable {
         this.empleadoMantenimiento = empleadoMantenimiento;
     }
 
-    public String getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(String idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
     public CitaMantenimiento getCitaMantenimiento() {
         return citaMantenimiento;
     }
 
     public void setCitaMantenimiento(CitaMantenimiento citaMantenimiento) {
         this.citaMantenimiento = citaMantenimiento;
-    }
-
-    public Integer getIdCita() {
-        return idCita;
-    }
-
-    public void setIdCita(Integer idCita) {
-        this.idCita = idCita;
     }
 
     public Date getFechaInicio() {
@@ -128,11 +119,27 @@ public class Mantenimiento implements Serializable {
         this.precio = precio;
     }
 
+    public MantenimientoPK getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(MantenimientoPK primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.idEmpleado);
-        hash = 79 * hash + Objects.hashCode(this.idCita);
+        hash = 71 * hash + Objects.hashCode(this.primaryKey);
         return hash;
     }
 
@@ -148,15 +155,14 @@ public class Mantenimiento implements Serializable {
             return false;
         }
         final Mantenimiento other = (Mantenimiento) obj;
-        if (!Objects.equals(this.idEmpleado, other.idEmpleado)) {
-            return false;
-        }
-        return Objects.equals(this.idCita, other.idCita);
+        return Objects.equals(this.primaryKey, other.primaryKey);
     }
 
     @Override
     public String toString() {
-        return "Mantenimiento{" + "idTecnico=" + idEmpleado + ", idCita=" + idCita + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", precio=" + precio + '}';
+        return "Mantenimiento{" + "primaryKey=" + primaryKey + ", citaMantenimiento=" + citaMantenimiento + ", empleadoMantenimiento=" + empleadoMantenimiento + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", precio=" + precio + ", insumosAsignados=" + insumosAsignados + '}';
     }
+
+    
 
 }

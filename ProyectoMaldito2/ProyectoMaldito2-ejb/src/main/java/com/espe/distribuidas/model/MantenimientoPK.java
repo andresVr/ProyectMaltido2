@@ -1,31 +1,58 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires.
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
+ * Clase que representa a la clave primaria de la entidad MANTENIMIENTO contiene
+ * todos los datos asociados a la entidad.
  *
- * @author Andres Vr
+ * @author R&R S.A.
  */
-public class MantenimientoPK implements Serializable{
-    private String idTecnico;
-    
+@Embeddable
+public class MantenimientoPK implements Serializable {
+
+    @Column(name = "ID_EMPLEADO", nullable = false)
+    private String idEmpleado;
+
+    @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
 
     public MantenimientoPK() {
     }
 
-    public String getIdTecnico() {
-        return idTecnico;
+    public MantenimientoPK(String idEmpleado, Integer idCita) {
+        this.idEmpleado = idEmpleado;
+        this.idCita = idCita;
     }
 
-    public void setIdTecnico(String idTecnico) {
-        this.idTecnico = idTecnico;
+    public MantenimientoPK(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public MantenimientoPK(Integer idCita) {
+        this.idCita = idCita;
+    }
+    
+    
+    
+    public String getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public Integer getIdCita() {
@@ -39,7 +66,7 @@ public class MantenimientoPK implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.idTecnico);
+        hash = 67 * hash + Objects.hashCode(this.idEmpleado);
         hash = 67 * hash + Objects.hashCode(this.idCita);
         return hash;
     }
@@ -56,11 +83,10 @@ public class MantenimientoPK implements Serializable{
             return false;
         }
         final MantenimientoPK other = (MantenimientoPK) obj;
-        if (!Objects.equals(this.idTecnico, other.idTecnico)) {
+        if (!Objects.equals(this.idEmpleado, other.idEmpleado)) {
             return false;
         }
         return Objects.equals(this.idCita, other.idCita);
     }
-    
-    
+
 }

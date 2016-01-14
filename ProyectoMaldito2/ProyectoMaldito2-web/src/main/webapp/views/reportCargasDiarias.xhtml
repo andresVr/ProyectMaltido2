@@ -21,7 +21,7 @@
                 <p:message for="fechaF" />
                 <h:outputLabel for="empleado" value="Empleado: " />  
                 <p:selectOneMenu id="empleado" value="#{reportCargasBean.empleado}" required="true" >
-                    <f:selectItem itemLabel="Todas" itemValue="0" />
+                    <f:selectItem itemLabel="Empleado" itemValue="0" />
                     <f:selectItems value="#{reportCargasBean.listadoEmpleados}" var="i" itemValue="#{i.idEmpleado}" itemLabel="#{i.nombre}"/>
                 </p:selectOneMenu>
                 <p:message for="zona" />

@@ -392,6 +392,10 @@ public class FacturaBean extends BaseBean implements Serializable {
         }
                 this.reset();
               this.setFacturaSelected(null);
+              this.setDetallefactura(null);
+
+              this.setMantenimiento(null);
+              this.mantenimientos=new ArrayList<>();
         
     }
 

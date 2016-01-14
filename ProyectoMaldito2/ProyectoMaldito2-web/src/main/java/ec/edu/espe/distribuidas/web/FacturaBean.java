@@ -39,6 +39,7 @@ import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -60,6 +61,7 @@ public class FacturaBean extends BaseBean implements Serializable {
 
     @EJB
     private MantenimientoServicio mantenimientoServicio;
+    protected StreamedContent file;
     /**
      * variable que referencia un cliente seleccionada
      */
@@ -130,6 +132,8 @@ public class FacturaBean extends BaseBean implements Serializable {
      * seleccion de cliente.
      */
     private boolean disableAceptar = true;
+    
+    private boolean desabilitarEnvio=true;
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -190,7 +194,6 @@ public class FacturaBean extends BaseBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
         }
     }
-
 
     /**
      * metodo sobreescrito de la clase base permite setear en blanco y por
@@ -259,9 +262,10 @@ public class FacturaBean extends BaseBean implements Serializable {
                     this.detalleFacturaServicio.ingresarDetalleFactura(detalleFacturae);
                 }
                 this.facturas = facturaServicio.obtenerTodasFacturas();
-           
+
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la factura: "
                         + " del cliente: " + this.factura.getClienteFactura().getIdCliente(), null));
+                this.setDesabilitarEnvio(false);
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -280,7 +284,7 @@ public class FacturaBean extends BaseBean implements Serializable {
         }
 
 //        this.reset();
-  //      this.setFacturaSelected(null);
+        //      this.setFacturaSelected(null);
     }
 
     /**
@@ -352,6 +356,61 @@ public class FacturaBean extends BaseBean implements Serializable {
         }
         return total;
 
+    }
+
+    public void generateReport() {
+        //generar reporte
+        super.pdf("factura", "factura");
+        try {
+            this.testMultiPartEmail(this.factura.getClienteFactura().getCorreoElectronico());
+        } catch (UnsupportedEncodingException | EmailException | MalformedURLException ex) {
+            Logger.getLogger(ReportFacturaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                this.reset();
+              this.setFacturaSelected(null);
+        
+    }
+
+    public void testMultiPartEmail(String correo) throws UnsupportedEncodingException, EmailException, MalformedURLException {
+
+        EmailAttachment att2 = new EmailAttachment();
+        att2.setPath("C:\\Users\\Andres Vr\\Documents\\Git\\ProyectoMaldito7.0\\ProyectMaltido2\\ProyectoMaldito2\\ProyectoMaldito2-web\\src\\main\\webapp\\pdf\\factura.pdf");
+        att2.setDisposition(EmailAttachment.ATTACHMENT);
+        att2.setDescription("Envio Factura Mantenimiento SpotLinght&Wires");
+
+        MultiPartEmail email = new MultiPartEmail();
+        email.setHostName("smtp.gmail.com");
+        email.setSmtpPort(587);
+        email.setSSLOnConnect(true);
+        email.setAuthentication("spotwires@gmail.com", "084383260a");
+
+        email.addTo(correo);
+        email.setFrom("spotwires@gmail.com");
+        email.setSubject("Factura");
+        email.setMsg("Adjunto Factura");
+
+        email.attach(att2);
+
+        email.send();
+//            SimpleEmail mail = new SimpleEmail();
+// 
+//        //Configuracion necesaria para GMAIL
+//        mail.setHostName("smtp.gmail.com");
+//        mail.setTLS(true);
+//        mail.setSmtpPort(587);
+//        mail.setSSL(true);
+//        //En esta seccion colocar cuenta de usuario de Gmail y contraseña
+//        mail.setAuthentication("spotwires@gmail.com", "084383260a");
+// 
+//        //Cuenta de Email Destino
+//        mail.addTo("avrz237@gmail.com");
+//        //Cuenta de Email Origen, la misma con la que nos autenticamos
+//        mail.setFrom("spotwires@gmail.com");
+//        //Titulo del Email
+//        mail.setSubject("Email enviado usando Apache Commons Email");
+//        //Contenido del Email
+//        mail.setMsg("Mail enviado usando una cuenta de correo de GMAIL");
+//        mail.send();
     }
 
     /**
@@ -492,6 +551,22 @@ public class FacturaBean extends BaseBean implements Serializable {
 
     public void setDisableAceptar(boolean disableAceptar) {
         this.disableAceptar = disableAceptar;
+    }
+
+    public StreamedContent getFile() {
+        return file;
+    }
+
+    public void setFile(StreamedContent file) {
+        this.file = file;
+    }
+
+    public boolean isDesabilitarEnvio() {
+        return desabilitarEnvio;
+    }
+
+    public void setDesabilitarEnvio(boolean desabilitarEnvio) {
+        this.desabilitarEnvio = desabilitarEnvio;
     }
 
 }

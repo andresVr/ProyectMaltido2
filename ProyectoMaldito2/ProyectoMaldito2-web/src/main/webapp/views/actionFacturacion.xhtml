@@ -40,8 +40,6 @@
                     <p:ajax event="rowSelect" update="@form" listener="#{facturaBean.onRowSelect}" />
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{facturaBean.nuevo()}" immediate="true" update="@form" disabled="#{facturaBean.facturaSelected ne null}" styleClass=""/>
-                        <p:commandButton value="Modificar" actionListener="#{facturaBean.modificar()}" immediate="true" update="@form" disabled="#{facturaBean.facturaSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{facturaBean.eliminar()}" immediate="true" update="@form" disabled="#{facturaBean.facturaSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
 
@@ -133,10 +131,10 @@
                             <p:commandButton value="Aceptar" actionListener="#{facturaBean.aceptar()}"  update="@form"/>
                             <p:commandButton value="Cancelar" actionListener="#{facturaBean.cancelar()}" immediate="true"  update="@form"/>
 
-                                <p:commandButton id="downloadLink" value="Enviar Factura" ajax="false" icon="ui-icon-arrowthichk-s" actionListener="#{reportFacturaBean.generateReport()}">
-                                    <p:fileDownload value="#{reportFacturaBean.file}" />
-                                </p:commandButton>
-                            
+                            <p:commandButton id="downloadLink" value="Enviar Factura" ajax="false" icon="ui-icon-arrowthichk-s" disabled="#{facturaBean.desabilitarEnvio}" actionListener="#{facturaBean.generateReport()}">
+                                <p:fileDownload value="#{facturaBean.file}" />
+                            </p:commandButton>
+
                         </f:facet>
                     </h:panelGrid>
                 </p:panel>

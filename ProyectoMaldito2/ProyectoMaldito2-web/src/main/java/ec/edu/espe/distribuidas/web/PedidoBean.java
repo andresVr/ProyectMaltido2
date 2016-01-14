@@ -9,6 +9,7 @@
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */package ec.edu.espe.distribuidas.web;
 
+import com.espe.distribuidas.model.DetalleDevolucion;
 import com.espe.distribuidas.model.DetallePedido;
 import com.espe.distribuidas.model.Pedido;
 import com.espe.distribuidas.model.Insumos;
@@ -239,6 +240,13 @@ public class PedidoBean extends BaseBean implements Serializable {
         super.quitarSeleccion();
     }
 
+    public void actualizar(List<DetallePedido> devolucion) {
+         for(int i=0;i<devolucion.size();i++)
+         {
+            Insumos insumotmp=this.insumoServicio.obtenerInsumoPorID(devolucion.get(i).getIdInsumo());
+            insumotmp.setCantidad(insumotmp.getCantidad().add(devolucion.get(i).getCantidad()));
+         }
+     }
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
      * maneras, para la primera guarda un nuevo registro en la base de datos.
@@ -259,7 +267,7 @@ public class PedidoBean extends BaseBean implements Serializable {
 
                     this.detallePedidoServicio.ingresarDetallePedido(detallePedidoe);
                 }
-                
+                this.actualizar(detallePedidos);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el pedido: "
                         + this.pedido.getIdPedido() + " al proveedor: " + this.pedido.getProveedorPedido().getIdProveedor(), null));
                 this.pedidos = pedidoServicio.obtenerTodosPedidos();

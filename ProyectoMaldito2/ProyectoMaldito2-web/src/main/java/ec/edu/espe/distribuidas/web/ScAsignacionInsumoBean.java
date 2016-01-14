@@ -168,6 +168,7 @@ public class ScAsignacionInsumoBean extends BaseBean implements Serializable {
         this.asignacionInsumo.setMantenimientoAsignacionInsumo(this.mantenimientoSelected);
         this.asignacionInsumo.setInsumo(this.insumoSelected);
         this.asignacionInsumo.setFechaAsignacion(new Date());
+        this.asignacionInsumo.setEstado("ACT");
         this.guardarAsignacionInsumo.add(this.asignacionInsumo);
 
     }
@@ -254,6 +255,7 @@ public class ScAsignacionInsumoBean extends BaseBean implements Serializable {
             try {
 
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
+                
                 this.asignacionInsumoServicio.ingresarInsumoAsignado(this.guardarAsignacionInsumo);
                 listaActualizar();
                 // this.citas.add(0, this.cita);

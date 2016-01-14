@@ -26,27 +26,32 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Clase que representa a la entidad ASIGNACION_INSUMO
- * contiene todos los datos asociados a la entidad.
+ * Clase que representa a la entidad ASIGNACION_INSUMO contiene todos los datos
+ * asociados a la entidad.
+ *
  * @author R&R S.A.
  */
 @Entity
 @Table(name = "ASIGNACION_INSUMO_001")
 
 public class AsignacionInsumo implements Serializable {
+
     @EmbeddedId
     AsignacionInsumoPK primaryKey;
-    
+
     @Temporal(TemporalType.DATE)
     @Column(name = "FECHA_ASIGNACION", nullable = false)
     private Date fechaAsignacion;
 
     @Column(name = "CANTIDAD", nullable = false)
     private BigDecimal cantidad;
-    
-    @Column(name="UNIDAD_MEDIDA",nullable = false)
+
+    @Column(name = "UNIDAD_MEDIDA", nullable = false)
     private String unidadMedida;
 
+    @Column(name = "ESTADO", nullable = false)
+    private String estado;
+    
     @JoinColumns({
         @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false),
         @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
@@ -85,8 +90,6 @@ public class AsignacionInsumo implements Serializable {
         this.primaryKey = primaryKey;
     }
 
-    
-
     public Date getFechaAsignacion() {
         return fechaAsignacion;
     }
@@ -110,6 +113,15 @@ public class AsignacionInsumo implements Serializable {
     public void setUnidadMedida(String unidadMedida) {
         this.unidadMedida = unidadMedida;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -137,8 +149,5 @@ public class AsignacionInsumo implements Serializable {
     public String toString() {
         return "AsignacionInsumo{" + "primaryKey=" + primaryKey + ", fechaAsignacion=" + fechaAsignacion + ", cantidad=" + cantidad + ", unidadMedida=" + unidadMedida + ", mantenimientoAsignacionInsumo=" + mantenimientoAsignacionInsumo + ", insumo=" + insumo + '}';
     }
-
-    
- 
 
 }

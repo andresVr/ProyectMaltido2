@@ -232,13 +232,22 @@ public class FacturaBean extends BaseBean implements Serializable {
         this.detallefactura.setIdTecnico(mantenimientoSelected.getEmpleadoMantenimiento().getIdEmpleado());
         this.detallefactura.setCantidad(1);
         this.detallefactura.setValorUnitario(mantenimientoSelected.getPrecio());
-
+        this.detallefactura.setMantenimientoDetalleFactura(mantenimientoSelected);
         this.detalleFacturas.add(this.detallefactura);
 
         this.factura.setTotal(Total());
         this.mantenimientos.remove(this.mantenimientoSelected);
         this.setMantenimiento(null);
         super.quitarSeleccion();
+    }
+    public void actualizarEstadoMantenimientoFacturado(List<DetalleFactura> detalle ){
+        
+        for(int i=0;i<detalle.size();i++){
+            Mantenimiento mantenimientotmp=detalle.get(i).getMantenimientoDetalleFactura();
+            mantenimientotmp.setEstado("DSC");
+            this.mantenimientoServicio.actulizarMantenimiento(mantenimientotmp);
+        }
+    
     }
 
     /**
@@ -262,6 +271,7 @@ public class FacturaBean extends BaseBean implements Serializable {
                     this.detalleFacturaServicio.ingresarDetalleFactura(detalleFacturae);
                 }
                 this.facturas = facturaServicio.obtenerTodasFacturas();
+                this.actualizarEstadoMantenimientoFacturado(detalleFacturas);
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la factura: "
                         + " del cliente: " + this.factura.getClienteFactura().getIdCliente(), null));

@@ -58,6 +58,9 @@ public class Mantenimiento implements Serializable {
     @Column(name = "PRECIO", nullable = false)
     private BigDecimal precio;
 
+    @Column(name = "ESTADO", nullable = false)
+    private String estado;
+    
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mantenimientoAsignacionInsumo")
     private List<AsignacionInsumo> insumosAsignados;
 
@@ -123,6 +126,15 @@ public class Mantenimiento implements Serializable {
     public void setPrimaryKey(MantenimientoPK primaryKey) {
         this.primaryKey = primaryKey;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 
     @Override
     public int hashCode() {

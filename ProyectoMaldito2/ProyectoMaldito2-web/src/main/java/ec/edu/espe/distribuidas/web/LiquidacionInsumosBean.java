@@ -157,6 +157,7 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
             this.liquidacionAsignacion.setUnidadMedida(this.asignacionInsumo.getUnidadMedida());
             this.liquidacionAsignacion.setFecha(new Date());
             this.liquidacionAsignacion.setTotalLiquidacion(this.asignacionInsumo.getInsumo().getPrecioCompra());
+            this.liquidacionAsignacion.setInsumoliquidado(this.asignacionInsumo);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(CitaMantenimientoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -174,6 +175,7 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
             // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
             this.liquidacionAsignacion.setTotalLiquidacion(this.liquidacionAsignacion.getTotalLiquidacion().multiply(this.liquidacionAsignacion.getCantidad()));
             this.liquidacionServicio.ingresarInsumo(this.liquidacionAsignacion);
+            this.actualizarEstadoAsignacionInsumo(this.liquidacionAsignacion);
             // this.citas.add(0, this.cita);
             this.liquidacionAsignaciones = this.liquidacionServicio.obtenerTodos();
 
@@ -193,6 +195,12 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
         super.seleccionar();
     }
 
+    public void actualizarEstadoAsignacionInsumo(LiquidacionAsignacion asignacion){
+        AsignacionInsumo asignacionInsumotmp=asignacion.getInsumoliquidado();
+        asignacionInsumotmp.setEstado("DSC");
+        this.asignacionInsumoServicio.actulizarInsumoAsignado(asignacionInsumotmp);
+    
+    }
     public Insumos actualizar(AsignacionInsumo asignacion, LiquidacionAsignacion liquidacion) {
         Integer res;
 

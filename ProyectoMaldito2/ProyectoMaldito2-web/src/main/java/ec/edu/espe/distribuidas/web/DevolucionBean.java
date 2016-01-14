@@ -9,9 +9,11 @@
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */package ec.edu.espe.distribuidas.web;
 
+import com.espe.distribuidas.model.AsignacionInsumo;
 import com.espe.distribuidas.model.DetalleDevolucion;
 import com.espe.distribuidas.model.Devoluciones;
 import com.espe.distribuidas.model.Insumos;
+import com.espe.distribuidas.model.LiquidacionAsignacion;
 import com.espe.distribuidas.model.Proveedor;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
 import com.espe.distribuidas.servicio.DetalleDevolucionServicio;
@@ -20,6 +22,8 @@ import com.espe.distribuidas.servicio.InsumoServicio;
 import com.espe.distribuidas.servicio.ProveedorServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -253,6 +257,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
 
                     this.detalleDevolucionServicio.ingresarDetalleDevolucion(detalleDevolucione);
                 }
+                this.actualizar(this.detalleDevoluciones);
                 this.devoluciones=devolucionServicio.obtenerTodasDevoluciones();
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la devolucion: "
                         + this.devolucion.getIdDevoluciones() + " del proveedor: " + this.devolucion.getDevolucionProveedor().getIdProveedor(), null));
@@ -293,6 +298,15 @@ public class DevolucionBean extends BaseBean implements Serializable {
         super.seleccionar();
     }
 
+     public void actualizar(List<DetalleDevolucion> devolucion) {
+         for(int i=0;i<devolucion.size();i++)
+         {
+            Insumos insumotmp=this.insumoServicio.obtenerInsumoPorID(devolucion.get(i).getIdInsumo());
+            insumotmp.setCantidad(insumotmp.getCantidad().subtract(devolucion.get(i).getCantidad()));
+         }
+     }
+    
+    
     /**
      * setea el id de la tabla en el parametro del formulario.
      */

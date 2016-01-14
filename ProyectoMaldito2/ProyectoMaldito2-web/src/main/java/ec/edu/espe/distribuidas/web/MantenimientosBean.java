@@ -227,6 +227,7 @@ public class MantenimientosBean extends BaseBean implements Serializable {
         if (super.isEnNuevo()) {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
+                this.mantenimiento.setEstado("ACT");
                 this.mantenimientoServicio.ingresarMantenimiento(this.mantenimiento);
                 // this.citas.add(0, this.cita);
                 this.mantenimientos.clear();

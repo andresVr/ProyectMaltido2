@@ -19,8 +19,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 /**
- * Clase de servicio de cita mantenimiento, define todas las operaciones del CRUD y
- * busqueda.
+ * Clase de servicio de cita mantenimiento, define todas las operaciones del
+ * CRUD y busqueda.
  *
  * @author R&R S.A.
  *
@@ -47,11 +47,21 @@ public class CitaMantenimientoServicio {
     }
 
     /**
+     * ontiene las citas activas del sistema.
+     * @return retorna la lista de citas.
+     */
+    public List<CitaMantenimiento> obtenerTodasCitasActivas() {
+        CitaMantenimiento citatmp=new CitaMantenimiento();
+        citatmp.setEstado("ACT");
+        return this.citaMantenimiento.find(citatmp);
+    }
+
+    /**
      * Permite realizar una busqueda para encontrar un cliente por ID de
      * cliente.
      *
-     * @param codigoCita  parametro tipo String que define el Codigo de
-     * cliente buscar.
+     * @param codigoCita parametro tipo String que define el Codigo de cliente
+     * buscar.
      * @return retorna el objeto cliente de la base de datos.
      */
     public CitaMantenimiento obtenerCitaPorID(Integer codigoCita) {
@@ -66,13 +76,14 @@ public class CitaMantenimientoServicio {
      * que el cliente ya existe.
      */
     public void ingresarCitaMantenimiento(CitaMantenimiento citaMantenimiento) throws ValidacionException {
-            this.citaMantenimiento.insert(citaMantenimiento);
+        this.citaMantenimiento.insert(citaMantenimiento);
     }
 
     /**
      * Permite actualizar clientes de la base de datos.
      *
-     * @param citamantenimiento  recibe un objeto cita mantenimiento a actualizar.
+     * @param citamantenimiento recibe un objeto cita mantenimiento a
+     * actualizar.
      */
     public void actulizarCita(CitaMantenimiento citamantenimiento) {
         this.citaMantenimiento.update(citamantenimiento);
@@ -81,7 +92,7 @@ public class CitaMantenimientoServicio {
     /**
      * Permite eliminar citas de la base de datos.
      *
-     * @param idCita  recibe un objeto de cliente a eliminar.
+     * @param idCita recibe un objeto de cliente a eliminar.
      */
     public void eliminarCita(Integer idCita) {
 

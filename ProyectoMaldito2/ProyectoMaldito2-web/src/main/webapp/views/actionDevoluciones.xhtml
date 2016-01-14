@@ -34,7 +34,6 @@
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{devolucionBean.nuevo()}" immediate="true" update="@form" disabled="#{devolucionBean.devolucionSelected ne null}" styleClass=""/>
                         <p:commandButton value="Modificar" actionListener="#{devolucionBean.modificar()}" immediate="true" update="@form" disabled="#{devolucionBean.devolucionSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{devolucionBean.eliminar()}" immediate="true" update="@form" disabled="#{devolucionBean.devolucionSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
 

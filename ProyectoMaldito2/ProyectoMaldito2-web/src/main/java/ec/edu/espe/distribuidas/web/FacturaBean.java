@@ -9,11 +9,13 @@
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */package ec.edu.espe.distribuidas.web;
 
+import com.espe.distribuidas.model.CitaMantenimiento;
 import com.espe.distribuidas.model.DetalleFactura;
 import com.espe.distribuidas.model.Factura;
 import com.espe.distribuidas.model.Mantenimiento;
 import com.espe.distribuidas.model.Cliente;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
+import com.espe.distribuidas.servicio.CitaMantenimientoServicio;
 import com.espe.distribuidas.servicio.DetalleFacturaServicio;
 import com.espe.distribuidas.servicio.FacturaServicio;
 import com.espe.distribuidas.servicio.MantenimientoServicio;
@@ -50,6 +52,9 @@ import org.primefaces.model.StreamedContent;
 
 public class FacturaBean extends BaseBean implements Serializable {
 
+    @EJB
+    private CitaMantenimientoServicio citaservicio;
+    
     @EJB
     private FacturaServicio facturaServicio;
 
@@ -249,6 +254,15 @@ public class FacturaBean extends BaseBean implements Serializable {
         }
     
     }
+        public void actualizarEstadoCitaMantenimientoFacturado(List<DetalleFactura> detalle ){
+        
+        for(int i=0;i<detalle.size();i++){
+            CitaMantenimiento citatmp=detalle.get(i).getMantenimientoDetalleFactura().getCitaMantenimiento();
+            citatmp.setEstado("DSC");
+            this.citaservicio.actulizarCita(citatmp);
+        }
+    
+    }
 
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
@@ -272,7 +286,7 @@ public class FacturaBean extends BaseBean implements Serializable {
                 }
                 this.facturas = facturaServicio.obtenerTodasFacturas();
                 this.actualizarEstadoMantenimientoFacturado(detalleFacturas);
-
+                this.actualizarEstadoCitaMantenimientoFacturado(detalleFacturas);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la factura: "
                         + " del cliente: " + this.factura.getClienteFactura().getIdCliente(), null));
                 this.setDesabilitarEnvio(false);

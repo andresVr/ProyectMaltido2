@@ -223,19 +223,19 @@ public class DevolucionBean extends BaseBean implements Serializable {
     }
 
     public void onRowSelectInsumo(SelectEvent evt) {
-         this.insumodetalle = new Insumos();
+        this.insumodetalle = new Insumos();
         insumoDetalle.add(this.insumoSelected);
 
         this.detalledevolucion = new DetalleDevolucion();
 
         this.detalledevolucion.setIdInsumo(this.insumoSelected.getIdInsumo());
-        this.detalledevolucion.setIdDevolucion(28);
+
         this.detalledevolucion.setCantidad(this.insumoSelected.getCantidad());
+        this.detalledevolucion.setDevolucionInsumo(this.insumoSelected);
         detalleDevoluciones.add(this.detalledevolucion);
-        this.setInsumo(null);
+        // this.setInsumo(null);
         super.quitarSeleccion();
     }
- 
 
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
@@ -249,7 +249,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
                 this.devolucionServicio.ingresarDevolucion(this.devolucion);
-               
+
                 devolucionestmp = this.devolucionServicio.findLast();
                 insertarIdDevolusion(devolucionestmp, detalleDevoluciones);
 
@@ -257,10 +257,11 @@ public class DevolucionBean extends BaseBean implements Serializable {
 
                     this.detalleDevolucionServicio.ingresarDetalleDevolucion(detalleDevolucione);
                 }
-                this.actualizar(this.detalleDevoluciones);
-                this.devoluciones=devolucionServicio.obtenerTodasDevoluciones();
+                this.devoluciones = devolucionServicio.obtenerTodasDevoluciones();
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la devolucion: "
                         + this.devolucion.getIdDevoluciones() + " del proveedor: " + this.devolucion.getDevolucionProveedor().getIdProveedor(), null));
+              //  this.actualizar(this.detalleDevoluciones);
+
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -283,14 +284,15 @@ public class DevolucionBean extends BaseBean implements Serializable {
     }
 
     /**
-     *inserta en la lista de detalles de devolucion el is de la devo;lucion asociada.
+     * inserta en la lista de detalles de devolucion el is de la devo;lucion
+     * asociada.
+     *
      * @param devolucionesid recive el objeto del id de devolucion asociada.
      * @param lista recove la lista a insertar.
      */
-    public void insertarIdDevolusion(Devoluciones devolucionesid,List<DetalleDevolucion> lista) {
-        for(int i=0;i<lista.size();i++)
-        {
-        lista.get(i).setIdDevolucion(devolucionesid.getIdDevoluciones());
+    public void insertarIdDevolusion(Devoluciones devolucionesid, List<DetalleDevolucion> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            lista.get(i).setIdDevolucion(devolucionesid.getIdDevoluciones());
         }
     }
 
@@ -298,15 +300,14 @@ public class DevolucionBean extends BaseBean implements Serializable {
         super.seleccionar();
     }
 
-     public void actualizar(List<DetalleDevolucion> devolucion) {
-         for(int i=0;i<devolucion.size();i++)
-         {
-            Insumos insumotmp=this.insumoServicio.obtenerInsumoPorID(devolucion.get(i).getIdInsumo());
+    public void actualizar(List<DetalleDevolucion> devolucion) {
+        for (int i = 0; i < devolucion.size(); i++) {
+            Insumos insumotmp = this.insumoServicio.obtenerInsumoPorID(devolucion.get(i).getDevolucionInsumo().getIdInsumo());
             insumotmp.setCantidad(insumotmp.getCantidad().subtract(devolucion.get(i).getCantidad()));
-         }
-     }
-    
-    
+            this.insumoServicio.actualizarInsumo(insumotmp);
+        }
+    }
+
     /**
      * setea el id de la tabla en el parametro del formulario.
      */

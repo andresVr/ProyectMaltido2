@@ -90,6 +90,8 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
      * seleccion de cliente.
      */
     private boolean diableAceptar = true;
+    
+    private boolean campoModificar=true;
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -97,7 +99,7 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
      */
     @PostConstruct
     public void inicializar() {
-        this.citas = this.citaServicio.obtenerTodasCitas();
+        this.citas = this.citaServicio.obtenerTodasCitasActivas();
         this.clientes = this.clienteServicio.obtenerTodosClientes();
     }
 
@@ -122,6 +124,7 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         super.modificar();
         this.cita = new CitaMantenimiento();
         this.setTitle("Modificar Cita de Mantenimiento");
+        this.setCampoModificar(false);
         try {
             BeanUtils.copyProperties(this.cita, this.citaSelected);
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -335,6 +338,14 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
 
     public void setDiableAceptar(boolean diableAceptar) {
         this.diableAceptar = diableAceptar;
+    }
+
+    public boolean isCampoModificar() {
+        return campoModificar;
+    }
+
+    public void setCampoModificar(boolean campoModificar) {
+        this.campoModificar = campoModificar;
     }
 
 }

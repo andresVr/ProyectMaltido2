@@ -43,22 +43,22 @@
                 <p:panel header="#{proveedorBean.title}" style="width: 100%" rendered="#{proveedorBean.enNuevo or proveedorBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
-                        <p:outputLabel for="txtCedula" value="Cedula/RUC: "/>
-                        <p:inputText id="txtCedula" value="#{proveedorBean.proveedores.idProveedor }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        <p:outputLabel for="txtCedula" value="Cedula/RUC: " rendered="#{proveedorBean.campoModificar}"/>
+                        <p:inputText id="txtCedula" value="#{proveedorBean.proveedores.idProveedor }" rendered="#{proveedorBean.campoModificar}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                             <f:validateRegex pattern="^[0-9]+$" />
                             <f:validateLength minimum="3" maximum="15" />
                         </p:inputText> 
                         <p:message for="txtCedula"/>
 
-                        <p:outputLabel for="txtNombre" value="Nombres: "/>
-                        <p:inputText id="txtNombre" value="#{proveedorBean.proveedores.nombreEmpresa }" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
+                        <p:outputLabel for="txtNombre" value="Nombres: " rendered="#{proveedorBean.campoModificar}"/>
+                        <p:inputText id="txtNombre" value="#{proveedorBean.proveedores.nombreEmpresa }" rendered="#{proveedorBean.campoModificar}" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
                             <f:validateRegex pattern="^[a-zA-Z]+$" />
                             <f:validateLength minimum="3" maximum="30" />
                         </p:inputText> 
                         <p:message for="txtNombre"/>
 
                         <p:outputLabel for="txtDireccion" value="Dirección "/>
-                        <p:inputText id="txtDireccion" value="#{proveedorBean.proveedores.direccion}" required="true" requiredMessage="Campo Requerido">
+                        <p:inputText id="txtDireccion" value="#{proveedorBean.proveedores.direccion}"  required="true" requiredMessage="Campo Requerido">
                             <f:validateLength minimum="3" maximum="50" />
                         </p:inputText>
                         <p:message for="txtDireccion"/>

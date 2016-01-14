@@ -62,6 +62,8 @@ public class ProveedorBean extends BaseBean implements Serializable {
      * variable tipo String para los titulos del formulario.
      */
     private String title = "";
+    
+    private Boolean campoModificar=true;
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -102,6 +104,7 @@ public class ProveedorBean extends BaseBean implements Serializable {
         super.modificar();
         this.proveedores = new Proveedor();
         this.setTitle("Modificar Proveedor");
+        this.setCampoModificar(false);
         try {
             BeanUtils.copyProperties(this.proveedores, this.proveedorSelected);
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -252,6 +255,14 @@ public class ProveedorBean extends BaseBean implements Serializable {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Boolean getCampoModificar() {
+        return campoModificar;
+    }
+
+    public void setCampoModificar(Boolean campoModificar) {
+        this.campoModificar = campoModificar;
     }
 
 }

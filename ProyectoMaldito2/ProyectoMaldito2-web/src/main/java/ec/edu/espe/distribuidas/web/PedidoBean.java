@@ -221,32 +221,33 @@ public class PedidoBean extends BaseBean implements Serializable {
     }
 
     public void onRowSelectInsumo(SelectEvent evt) {
-        BigDecimal precio ;
+        BigDecimal precio;
         insumodetalle = new Insumos();
 
-        this.insumoDetalle.add(insumoSelected);
+        this.insumoDetalle.add(this.insumoSelected);
 
         detallepedido = new DetallePedido();
         precio = insumoSelected.getCantidad().multiply(insumoSelected.getPrecioCompra());
         this.detallepedido.setPrecio(precio);
         this.detallepedido.setIdInsumo(insumoSelected.getIdInsumo());
         this.detallepedido.setCantidad(insumoSelected.getCantidad());
-
-        detallePedidos.add(this.detallepedido);
+        this.detallepedido.setInsumoPedido(insumoSelected);
+        this.detallePedidos.add(this.detallepedido);
 
         this.pedido.setTotalPedido(Total());
 
-        this.setInsumo(null);
         super.quitarSeleccion();
     }
 
     public void actualizar(List<DetallePedido> devolucion) {
-         for(int i=0;i<devolucion.size();i++)
-         {
-            Insumos insumotmp=this.insumoServicio.obtenerInsumoPorID(devolucion.get(i).getIdInsumo());
+
+        for (int i = 0; i < devolucion.size(); i++) {
+            Insumos insumotmp = this.insumoServicio.obtenerInsumoPorID(devolucion.get(i).getInsumoPedido().getIdInsumo());
             insumotmp.setCantidad(insumotmp.getCantidad().add(devolucion.get(i).getCantidad()));
-         }
-     }
+            this.insumoServicio.actualizarInsumo(insumotmp);
+        }
+    }
+
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
      * maneras, para la primera guarda un nuevo registro en la base de datos.
@@ -267,10 +268,12 @@ public class PedidoBean extends BaseBean implements Serializable {
 
                     this.detallePedidoServicio.ingresarDetallePedido(detallePedidoe);
                 }
-                this.actualizar(detallePedidos);
+
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el pedido: "
                         + this.pedido.getIdPedido() + " al proveedor: " + this.pedido.getProveedorPedido().getIdProveedor(), null));
                 this.pedidos = pedidoServicio.obtenerTodosPedidos();
+//                this.actualizar(this.detallePedidos);
+
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));

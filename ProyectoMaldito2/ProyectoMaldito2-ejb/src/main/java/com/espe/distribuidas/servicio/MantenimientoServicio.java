@@ -55,6 +55,12 @@ public class MantenimientoServicio {
         return this.mantenimientoDAO.findAll();
     }
 
+    public List<Mantenimiento> obtenerTodosMantenimientosActivos() {
+        Mantenimiento mantenimientotmp=new Mantenimiento();
+        mantenimientotmp.setEstado("ACT");
+        return this.mantenimientoDAO.find(mantenimientotmp);
+    }
+
     public List<Mantenimiento> obtenerTodosMantenimientosCliente(Cliente cliente) {
         CitaMantenimiento citatmp = new CitaMantenimiento();
         citatmp.setClienteCita(cliente);

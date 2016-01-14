@@ -61,12 +61,11 @@ public class EmpleadoBean extends BaseBean implements Serializable {
      * variable tipo String para los titulos del formulario.
      */
     private String title = "";
-    
+
     /**
      * variable tipo boolean para inhabilitar datos del formulario.
      */
     private Boolean disabledCampoModificar = false;
-    
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -142,7 +141,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
      */
     public void onRowSelect(SelectEvent event) {
         this.disabled = false;
-        this.disabledCampoModificar=true;
+        this.disabledCampoModificar = true;
     }
 
     /**
@@ -155,9 +154,17 @@ public class EmpleadoBean extends BaseBean implements Serializable {
         if (super.isEnNuevo()) {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
-                this.empleadoServicio.ingresarEmpleado(this.empleado);
-                this.empleados.add(0, this.empleado);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el cliente: " + this.empleado.getNombre() + " " + this.empleado.getApellido(), null));
+                if (this.empleadoServicio.validarUsuario(this.empleado.getUsuario()) == true) {
+                    this.empleadoServicio.ingresarEmpleado(this.empleado);
+                    this.empleados.add(0, this.empleado);
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el cliente: " + this.empleado.getNombre() + " " + this.empleado.getApellido(), null));
+                    this.reset();
+                    this.setEmpleadoSelected(null);
+
+                } else {
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Existente", null));
+
+                }
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -168,14 +175,15 @@ public class EmpleadoBean extends BaseBean implements Serializable {
                 this.empleadoServicio.actualizarEmpleado(this.empleado);
                 BeanUtils.copyProperties(this.empleadoSelected, this.empleado);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el cliente: " + this.empleado.getNombre() + " " + this.empleado.getApellido(), null));
+                this.reset();
+                this.setEmpleadoSelected(null);
+
             } catch (ValidacionException | IllegalAccessException | InvocationTargetException e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
             }
         }
 
-        this.reset();
-        this.setEmpleadoSelected(null);
     }
 
     /**
@@ -188,8 +196,8 @@ public class EmpleadoBean extends BaseBean implements Serializable {
         this.empleado = new Empleado();
     }
 
-     /**
-     *permite ingresar un empleado en la BDD.
+    /**
+     * permite ingresar un empleado en la BDD.
      */
     public void registrarEmpleado() {
         try {
@@ -202,6 +210,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de titulo.
+     *
      * @return retirna un string.
      */
     public String getTitle() {
@@ -210,6 +219,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo set de titulo.
+     *
      * @param title ingresa un string.
      */
     public void setTitle(String title) {
@@ -218,6 +228,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de disabled.
+     *
      * @return retirna un boolean.
      */
     public Boolean getDisabled() {
@@ -226,6 +237,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo set de disabled.
+     *
      * @param disabled ingresa un boolean.
      */
     public void setDisabled(Boolean disabled) {
@@ -234,6 +246,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de la lista de empleados.
+     *
      * @return retorna una lista de empleados.
      */
     public List<Empleado> getEmpleados() {
@@ -242,6 +255,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo set de empleados.
+     *
      * @param empleados ingresa una lista de empleados.
      */
     public void setEmpleados(List<Empleado> empleados) {
@@ -250,21 +264,25 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de empleado.
+     *
      * @return retorna un tipo empleado.
      */
     public Empleado getEmpleado() {
         return empleado;
     }
-     /**
-      * metodo set de empleado.
-      * @param empleado recibe un tipo empleado.
-      */
+
+    /**
+     * metodo set de empleado.
+     *
+     * @param empleado recibe un tipo empleado.
+     */
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
 
     /**
      * metodo get del empleado seleccionado.
+     *
      * @return retorna un objeto tipo empleado.
      */
     public Empleado getEmpleadoSelected() {
@@ -273,6 +291,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo set del empleado seleccionado.
+     *
      * @param empleadoSelected retorna un tipo empleado.
      */
     public void setEmpleadoSelected(Empleado empleadoSelected) {
@@ -281,6 +300,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de desabilitar campos.
+     *
      * @return retorna un boolean.
      */
     public Boolean getDisabledCampoModificar() {
@@ -289,11 +309,11 @@ public class EmpleadoBean extends BaseBean implements Serializable {
 
     /**
      * metodo set de desabilitar campos.
+     *
      * @param disabledCampoModificar acepta un boolean.
      */
     public void setDisabledCampoModificar(Boolean disabledCampoModificar) {
         this.disabledCampoModificar = disabledCampoModificar;
     }
-    
 
 }

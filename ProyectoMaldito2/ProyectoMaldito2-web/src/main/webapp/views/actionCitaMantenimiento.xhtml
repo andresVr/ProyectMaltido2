@@ -47,7 +47,7 @@
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{citaMantenimientoBean.nuevo()}" immediate="true" update="@form" disabled="#{citaMantenimientoBean.citaSelected ne null}" styleClass=""/>
                         <p:commandButton value="Modificar" actionListener="#{citaMantenimientoBean.modificar()}" immediate="true" update="@form" disabled="#{citaMantenimientoBean.citaSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{citaMantenimientoBean.eliminar()}" immediate="true" update="@form" disabled="#{citaMantenimientoBean.citaSelected eq null}"/>
+              
                     </f:facet>
                 </p:dataTable>
                 <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Seleccionar Cliente" rendered="#{citaMantenimientoBean.enSeleccionar}">
@@ -78,15 +78,15 @@
                 <p:panel header="#{citaMantenimientoBean.title}" style="width: 100%" rendered="#{citaMantenimientoBean.enNuevo or citaMantenimientoBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
-                        <p:outputLabel for="txtCedula" value="Cliente: "/>
-                        <p:inputText id="txtCedula" value="#{citaMantenimientoBean.cita.idCliente }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        <p:outputLabel for="txtCedula" value="Cliente: " rendered="#{citaMantenimientoBean.campoModificar}"/>
+                        <p:inputText id="txtCedula" value="#{citaMantenimientoBean.cita.idCliente }" rendered="#{citaMantenimientoBean.campoModificar}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                             <f:validateRegex pattern="^[0-9]+$" />
                             <f:validateLength minimum="10" maximum="15" />
                         </p:inputText> 
                         <p:message for="txtCedula"/>
 
-                        <p:outputLabel for="txtfecha" value="Fecha:  "/>
-                        <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{citaMantenimientoBean.cita.fecha}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:outputLabel for="txtfecha" value="Fecha:  " rendered="#{citaMantenimientoBean.campoModificar}"/>
+                        <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{citaMantenimientoBean.cita.fecha}" rendered="#{citaMantenimientoBean.campoModificar}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtfecha"/>
 
                         <p:outputLabel for="txtTipo" value="Tipo: "/>

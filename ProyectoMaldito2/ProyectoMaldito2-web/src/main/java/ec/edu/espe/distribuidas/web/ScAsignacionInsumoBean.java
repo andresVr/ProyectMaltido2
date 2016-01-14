@@ -136,7 +136,7 @@ public class ScAsignacionInsumoBean extends BaseBean implements Serializable {
      */
     @PostConstruct
     public void inicializar() {
-        this.asignacionInsumos = this.asignacionInsumoServicio.obtenerTodasInsumosAsignados();
+        this.asignacionInsumos = this.asignacionInsumoServicio.obtenerTodasInsumosAsignadosActivos();
         this.insumos = this.insumoServicio.obtenerTodosInsumos();
         this.mantenimientos = this.mantenimientoServicio.obtenerTodosMantenimiento();
         this.primaryKey = new AsignacionInsumoPK();

@@ -41,6 +41,12 @@ public class ProveedorServicio {
     public List<Proveedor> obtenerTodosProveedores() {
         return this.proveedorDAO.findAll();
     }
+    
+    public List<Proveedor> obtenerTodosProveedoresActivos() {
+        Proveedor proveedortmp=new Proveedor();
+        proveedortmp.setEstado("ACT");
+        return this.proveedorDAO.findAll();
+    }
 
     /**
      * Permite realizar una busqueda para encontrar un proveedor por ID de proveedor.

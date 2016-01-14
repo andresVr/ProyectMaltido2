@@ -58,7 +58,6 @@
 
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{scAsignacionInsumoBean.nuevo()}" immediate="true" update="@form" disabled="#{scAsignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
-                        <p:commandButton value="Borrar" actionListener="#{scAsignacionInsumoBean.eliminar()}" immediate="true" update="@form" disabled="#{scAsignacionInsumoBean.asignacionInsumoSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
 

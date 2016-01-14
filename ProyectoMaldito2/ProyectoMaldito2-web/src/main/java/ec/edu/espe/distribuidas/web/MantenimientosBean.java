@@ -124,9 +124,9 @@ public class MantenimientosBean extends BaseBean implements Serializable {
      */
     @PostConstruct
     public void inicializar() {
-        this.citas = this.citaServicio.obtenerTodasCitas();
+        this.citas = this.citaServicio.obtenerTodasCitasActivas();
         this.empleados = this.empleadoServicio.buscasPorTecnico();
-        this.mantenimientos=this.mantenimientoServicio.obtenerTodosMantenimiento();
+        this.mantenimientos=this.mantenimientoServicio.obtenerTodosMantenimientosActivos();
         this.primaryKey=new MantenimientoPK();
     }
 

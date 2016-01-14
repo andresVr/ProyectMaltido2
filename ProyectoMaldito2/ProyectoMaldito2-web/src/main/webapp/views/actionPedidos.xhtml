@@ -37,8 +37,7 @@
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{pedidoBean.nuevo()}" immediate="true" update="@form" disabled="#{pedidoBean.pedidoSelected ne null}" styleClass=""/>
                         <p:commandButton value="Modificar" actionListener="#{pedidoBean.modificar()}" immediate="true" update="@form" disabled="#{pedidoBean.pedidoSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{pedidoBean.eliminar()}" immediate="true" update="@form" disabled="#{pedidoBean.pedidoSelected eq null}"/>
-                    </f:facet>
+                      </f:facet>
                 </p:dataTable>
 
                 <p:panel id="dialog" widgetVar="seleccionarProveedorDialog" header="Seleccionar Proveedor" rendered="#{pedidoBean.enSeleccionar}">

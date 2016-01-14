@@ -68,6 +68,13 @@ public class EmpleadoServicio {
         }
     }
 
+    public boolean validarUsuario(String usuario) {
+        Empleado empleadotmp = new Empleado();
+        empleadotmp.setUsuario(usuario);
+        List<Empleado> empleados = this.empleadoDAO.find(empleadotmp);
+        return empleados.isEmpty();
+    }
+
     /**
      * Permite actualizar empleados de la base de datos.
      *

@@ -107,7 +107,9 @@
                         <p:message for="txtPas1"/>
 
                         <p:outputLabel for="txtPas2" value="Repetir Clave: " />
-                        <p:password id="txtPas2" requiredMessage="Campo Requerido"/>
+                        <p:password id="txtPas2" requiredMessage="Campo Requerido" validatorMessage="se requiere al menos una mayuscula y un caracter especial">
+                            <f:validateRegex pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
+                        </p:password>
                         <p:message for="txtPas2"/>
                         <p:commandButton value="Aceptar" actionListener="#{empleadoBean.aceptar()}"  update="@form"/>
                         <p:commandButton value="Cancelar" actionListener="#{empleadoBean.cancelar()}" immediate="true"  update="@form"/>

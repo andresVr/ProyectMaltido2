@@ -104,7 +104,7 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         this.liquidacionAsignaciones = liquidacionServicio.obtenerTodos();
-        this.asignacionInsumos = asignacionInsumoServicio.obtenerTodasInsumosAsignados();
+        this.asignacionInsumos = asignacionInsumoServicio.obtenerTodasInsumosAsignadosActivos();
     }
 
     /**

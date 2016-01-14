@@ -46,6 +46,12 @@ public class AsignacionInsumoServicio {
     public List<AsignacionInsumo> obtenerTodasInsumosAsignados() {
         return this.asignacionInsumoDAO.findAll();
     }
+    
+    public List<AsignacionInsumo> obtenerTodasInsumosAsignadosActivos() {
+        AsignacionInsumo asignaciontmp=new AsignacionInsumo();
+        asignaciontmp.setEstado("ACT");
+        return this.asignacionInsumoDAO.find(asignaciontmp);
+    }
 
     /**
      * Permite realizar una busqueda para encontrar un insumo asignado por ID de

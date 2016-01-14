@@ -63,7 +63,7 @@ public class MantenimientoServicio {
         List<Mantenimiento> mantenimientos=new ArrayList<>();
         for (int i = 0; i < listBusquedaCita.size(); i++) {
             for (int j = 0; j < listaBusquedaMantenimiento.size(); j++) {
-                if(listaBusquedaMantenimiento.get(j).getCitaMantenimiento()==listBusquedaCita.get(i))
+                if(listaBusquedaMantenimiento.get(j).getCitaMantenimiento()==listBusquedaCita.get(i)&&listaBusquedaMantenimiento.get(j).getEstado().equals("ACT"))
                 {
                     mantenimientos.add(listaBusquedaMantenimiento.get(j));
                 }
@@ -95,6 +95,7 @@ public class MantenimientoServicio {
     public List<Mantenimiento> obtenerMantenimientoPorEmpleado(Empleado empleado) {
         Mantenimiento mantenimientotmp = new Mantenimiento();
         mantenimientotmp.setEmpleadoMantenimiento(empleado);
+        mantenimientotmp.setEstado("ACT");
         return this.mantenimientoDAO.find(mantenimientotmp);
     }
 

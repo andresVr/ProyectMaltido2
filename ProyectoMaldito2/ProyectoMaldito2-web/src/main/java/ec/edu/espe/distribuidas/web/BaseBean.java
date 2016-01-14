@@ -126,4 +126,5 @@ public class BaseBean implements Serializable {
     public void quitarSeleccion(){
     this.enSeleccionar=false;
     }
+    
 }

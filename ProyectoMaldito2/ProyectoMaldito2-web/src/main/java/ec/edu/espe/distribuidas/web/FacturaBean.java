@@ -19,12 +19,12 @@ import com.espe.distribuidas.servicio.FacturaServicio;
 import com.espe.distribuidas.servicio.MantenimientoServicio;
 import com.espe.distribuidas.servicio.ClienteServicio;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +35,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.MultiPartEmail;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -188,6 +191,7 @@ public class FacturaBean extends BaseBean implements Serializable {
         }
     }
 
+
     /**
      * metodo sobreescrito de la clase base permite setear en blanco y por
      * defecto los valores del formulario.
@@ -255,8 +259,9 @@ public class FacturaBean extends BaseBean implements Serializable {
                     this.detalleFacturaServicio.ingresarDetalleFactura(detalleFacturae);
                 }
                 this.facturas = facturaServicio.obtenerTodasFacturas();
+           
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la factura: "
-                 + " del cliente: " + this.factura.getClienteFactura().getIdCliente(), null));
+                        + " del cliente: " + this.factura.getClienteFactura().getIdCliente(), null));
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -274,8 +279,8 @@ public class FacturaBean extends BaseBean implements Serializable {
             }
         }
 
-        this.reset();
-        this.setFacturaSelected(null);
+//        this.reset();
+  //      this.setFacturaSelected(null);
     }
 
     /**
@@ -301,7 +306,7 @@ public class FacturaBean extends BaseBean implements Serializable {
     public void aceptarPopUp() {
         super.nuevo();
         this.cliente = new Cliente();
-         this.factura=new Factura();
+        this.factura = new Factura();
         try {
 
             BeanUtils.copyProperties(this.cliente, this.clienteSelected);
